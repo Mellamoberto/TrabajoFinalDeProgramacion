@@ -52,6 +52,7 @@ public class PantallaLogin extends JPanel{
 					JOptionPane.showMessageDialog(ventana, "Bienvenid@, "
 					+ventana.usuarioLogado.getNombre(), "Inicio de sesion realizado",
 					JOptionPane.INFORMATION_MESSAGE);
+					ventana.cambiarAPantalla(PantallaListado.class);
 				} catch (SQLIntegrityConstraintViolationException e2) {
 					JOptionPane.showMessageDialog(ventana, "El email ya existe", "No se pudo registrar",
 					JOptionPane.ERROR_MESSAGE);
