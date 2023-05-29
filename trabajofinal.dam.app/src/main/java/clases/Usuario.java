@@ -51,8 +51,8 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 	}
 	
 
-	public Usuario(String nombre, String email, String pass, LocalDate fechaRegistro, boolean esModerador)
-			throws SQLException {
+	public Usuario(String nombre, String email, String pass, LocalDate fechaRegistro, boolean esModerador) throws SQLException,
+	SQLIntegrityConstraintViolationException {
 		super(nombre);
 		this.email = email;
 		this.pass = pass;
@@ -70,18 +70,11 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 	}
 	
 
-	public Usuario(String nombre, String email, String pass) throws SQLException, UsuarioNoExisteException, PassInvalidaException,
+	public Usuario(String email, String pass) throws SQLException, UsuarioNoExisteException, PassInvalidaException,
 			SQLIntegrityConstraintViolationException {
-		super(nombre);
 		this.email = email;
 		this.pass = pass;
-		this.fechaRegistro = this.fechaRegistro;
-		this.videojuegosFavoritos = new TreeSet<>();
-		this.videojuegosJugados = new TreeSet<>();
-		this.videojuegosPendientes = new TreeSet<>();
-		this.esModerador = this.esModerador;
-		this.reviews = this.reviews;
-		this.amigos = this.amigos;
+		this.login(this);
 	}
 		
 

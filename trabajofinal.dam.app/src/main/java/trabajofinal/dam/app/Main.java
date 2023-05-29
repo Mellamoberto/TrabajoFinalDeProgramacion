@@ -26,12 +26,14 @@ import clases.Usuario;
 import clases.Videojuego;
 import excepciones.PassInvalidaException;
 import excepciones.UsuarioNoExisteException;
+import interfaces.Ventana;
 import utils.DAO;
 
 public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		Ventana v = new Ventana();
 
 		Scanner sc = new Scanner(System.in);
 
@@ -68,7 +70,7 @@ public class Main {
 					System.out.print("Password: ");
 					pass = sc.nextLine();
 					try {
-						user = new Usuario(nombre,email,pass);
+						user = new Usuario(email,pass);
 					} catch (SQLException | UsuarioNoExisteException | PassInvalidaException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -230,12 +232,14 @@ public class Main {
 				System.out.println("Es un usuario moderador? Escribe: true = si  /  false = no");
 				esModerador = Boolean.parseBoolean(sc.nextLine());
 
+
 				try {
 					newUser = new Usuario(nombre, email, pass, fechaRegistro, esModerador);
-				} catch (SQLException e2) {
+				} catch (SQLException e) {
 					// TODO Auto-generated catch block
-					e2.printStackTrace();
+					e.printStackTrace();
 				}
+
 
 				System.out.println("Usuario registrado con exito");
 
