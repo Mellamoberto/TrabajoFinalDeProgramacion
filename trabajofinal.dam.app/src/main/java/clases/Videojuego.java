@@ -17,6 +17,7 @@ import java.util.Iterator;
 import utils.DAO;
 
 public class Videojuego extends CosaConNombre implements Comparable<Videojuego> {
+	private float nota;
 	private String descripcion;
 	private String lanzamiento;
 	private Desarrolladora desarrolladora;
@@ -27,27 +28,46 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	private PlataformaVideojuego plataforma;
 
 	public float puntuacionMedia() {
+		float nota = 0;
 		float sumatoriaPuntuaciones = 0;
 		for (short i = 0; i < reviews.size(); i++) {
 			sumatoriaPuntuaciones += reviews.get(i).getCalificacion();
 		}
-		return sumatoriaPuntuaciones / reviews.size();
+		nota = sumatoriaPuntuaciones / reviews.size();
+		return nota;
 	}
 
-	public Videojuego(String nombre, String descripcion, String lanzamiento, Desarrolladora desarrolladora,
-			Distribuidora distribuidora, ArrayList<Review> reviews, int numComentarios, GeneroVideojuego genero,
-			PlataformaVideojuego plataforma) {
+	public Videojuego (String nombre, float nota, GeneroVideojuego genero, PlataformaVideojuego plataforma) {
 		super(nombre);
-		this.descripcion = descripcion;
-		this.lanzamiento = lanzamiento;
-		this.desarrolladora = desarrolladora;
-		this.distribuidora = distribuidora;
-		this.reviews = reviews;
-		this.numComentarios = 0;
+		this.nota = puntuacionMedia();
 		this.genero = genero;
 		this.plataforma = plataforma;
 	}
 
+	
+/*
+	public static ArrayList<Videojuego> getTodos() throws SQLException {
+		LinkedHashSet<String> columna = new LinkedHashSet<>();
+		columna.add("nombre");
+		columna.add("nota");
+		columna.add("genero");
+		columna.add("plataforma");
+		HashMap<String,Object> restricciones = new HashMap<>();
+		ArrayList<Videojuego> videojuegos = new ArrayList<>();
+		ArrayList<Object> listaVideojuegos = new ArrayList<>();
+		for (byte i=0; i<listaVideojuegos.size();i+=4) {
+			Videojuego videojuego = new Videojuego(
+					(String)listaVideojuegos.get(i),
+					(float)listaVideojuegos.get(i+2),
+					(GeneroVideojuego)listaVideojuegos.get(i),
+					(PlataformaVideojuego)listaVideojuegos.get(i));
+		videojuegos.add(videojuego);
+		}
+		return videojuegos;
+	}
+
+*/
+	
 	public Videojuego(String nombre, String descripcion, String lanzamiento) throws SQLException {
 		super(nombre);
 		this.descripcion = descripcion;
@@ -57,7 +77,7 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 		columnas.put("nombre", nombre);
 		columnas.put("descripcion", descripcion);
 		columnas.put("lanzamiento", lanzamiento);
-		columnas.put("numComentarios", numComentarios);
+		columnas.put("numComentarios", this.numComentarios);
 		DAO.insertar("videojuego", columnas);
 	}
 

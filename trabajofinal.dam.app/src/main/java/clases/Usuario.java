@@ -28,27 +28,6 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 	private boolean esModerador;
 	private TreeSet<Review> reviews;
 	private TreeMap<String, Usuario> amigos;
-
-	public Usuario(String nombre, String email, String pass, LocalDate fechaRegistro,
-			TreeSet<Videojuego> videojuegosJugados, TreeSet<Videojuego> videojuegosPendientes,
-			TreeSet<Videojuego> videojuegosFavoritos, boolean esModerador, TreeSet<Review> reviews,
-			TreeMap<String, Usuario> amigos) throws SQLException {
-		super(nombre);
-		this.email = email;
-		this.pass = pass;
-		this.fechaRegistro = fechaRegistro;
-		this.videojuegosJugados = videojuegosJugados;
-		this.videojuegosPendientes = videojuegosPendientes;
-		this.videojuegosFavoritos = videojuegosFavoritos;
-		this.esModerador = esModerador;
-		this.reviews = reviews;
-		this.amigos = amigos;
-		HashMap<String, Object> columnas = new HashMap<String, Object>();
-		columnas.put("nombre", nombre);
-		columnas.put("email", email);
-		columnas.put("pass", pass);
-		DAO.insertar("usuario", columnas);
-	}
 	
 
 	public Usuario(String nombre, String email, String pass, LocalDate fechaRegistro, boolean esModerador) throws SQLException,
@@ -84,8 +63,6 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 	public void login (Usuario user) throws SQLException, UsuarioNoExisteException, PassInvalidaException {
 		HashMap<String, Object> hM = new HashMap<>();
         hM.put("email", this.getEmail());
-        
-        
         LinkedHashSet<String> columnas = new LinkedHashSet<String>() {
         	{
         		add("nombre");
@@ -112,8 +89,7 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 				this.email = objEmail.toString();
 			}
 		}
-	
-        
+
         if (!consulta.isEmpty()) {                
             Object objNombre = consulta.get(0);
             this.setNombre(objNombre.toString());
