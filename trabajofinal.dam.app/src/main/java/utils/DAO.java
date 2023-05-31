@@ -137,6 +137,47 @@ public class DAO {
 		desconectar(smt);
 		return fila;
 	}
+	
+	public static ArrayList<Object> consultarLike(String tabla, LinkedHashSet<String> columnasSelect,
+			HashMap<String, Object> restricciones) throws SQLException {
+		Statement smt = conectar();
+
+		String query = "select ";
+		Iterator ith = columnasSelect.iterator();
+		while (ith.hasNext()) {
+			query += (String) ith.next() + ",";
+		}
+		query = query.substring(0, query.length() - 1) + " from " + tabla + (restricciones.size() > 0 ? " where " : "");
+		Iterator itm = restricciones.entrySet().iterator();
+		while (itm.hasNext()) {
+			Entry actual = (Entry) itm.next();
+			if (actual.getValue().getClass() != String.class && actual.getValue().getClass() != Character.class) {
+				query += (String) actual.getKey() + " like('%" + (String) actual.getValue() + "%') and ";
+			} else {
+				query += (String) actual.getKey() + " like('%\"" + (String) actual.getValue() + "%') and ";
+			}
+		}
+		if (restricciones.size() > 0) {
+			query = query.substring(0, query.length() - 5);
+		}
+		System.out.println(query);
+		ResultSet cursor = smt.executeQuery(query);
+		ArrayList<Object> fila = new ArrayList<Object>();
+		while (cursor.next()) {
+			Iterator<String> hsCols = columnasSelect.iterator();
+			while (hsCols.hasNext()) {
+				String nombreCol = (String) hsCols.next();
+				try {
+					fila.add(cursor.getInt(cursor.findColumn(nombreCol)));
+				} catch (NumberFormatException | SQLException e) {
+					fila.add(cursor.getString(cursor.findColumn(nombreCol)));
+				}
+			}
+
+		}
+		desconectar(smt);
+		return fila;
+	}
 
 	public static int actualizar(String tabla, HashMap<String, Object> datosAModificar,
 			HashMap<String, Object> restricciones) throws SQLException {

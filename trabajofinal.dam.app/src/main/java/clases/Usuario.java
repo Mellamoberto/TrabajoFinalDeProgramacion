@@ -137,6 +137,7 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 	}
 	
 	
+	
 	public void meterVideojuegoEnLista(Videojuego videojuego, TreeSet<Videojuego>listaVideojuego ) throws SQLException {
 		Scanner sc = new Scanner (System.in);
 		System.out.println("En que lista lo quieres meter:"
@@ -180,6 +181,8 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 	    DAO.insertar("videojuegos_favoritos", columnas);
 	    
 	}
+	
+	
 	
 	public void consultarListaVideojuego(TreeSet<Videojuego>listaVideojuego ) throws SQLException, VideojuegoNoExisteException {
 		Scanner sc = new Scanner (System.in);
@@ -245,6 +248,7 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 			}
 		}
 	}
+	
 	
 	public void meterVideojuegoEnBD (Videojuego videojuego) throws SQLException {
 		Scanner sc = new Scanner(System.in);

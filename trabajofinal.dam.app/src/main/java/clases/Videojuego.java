@@ -29,6 +29,11 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	private ArrayList<Review> reviews;
 	private GeneroVideojuego genero;
 	private PlataformaVideojuego plataforma;
+	
+//	public static ArrayList<Videojuego> busqueda(String nombre){
+		//Usa constructor con el like para que te devuelva aqui todos los juegos que contengan
+		//El texto pasado por argumentos. Usa la misma técnica que getTodos
+//	}
 
 	public float puntuacionMedia() throws SQLException {
 	    float nota = 0;
@@ -58,6 +63,18 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	}
 	
 
+	public Videojuego(String nombre, String descripcion, LocalDate lanzamiento) throws SQLException {
+		super(nombre);
+		this.descripcion = descripcion;
+		this.lanzamiento = lanzamiento;
+		HashMap<String, Object> columnas = new HashMap<String, Object>();
+		columnas.put("nombre", nombre);
+		columnas.put("descripcion", descripcion);
+		columnas.put("lanzamiento", lanzamiento);
+		columnas.put("genero", this.getGenero());
+		columnas.put("plataforma", this.getPlataforma());
+		DAO.insertar("videojuego", columnas);
+	}
 	
 	
 
@@ -83,18 +100,7 @@ public Videojuego(String nombre) {
 	}
 
 
-public Videojuego(String nombre, String descripcion, LocalDate lanzamiento) throws SQLException {
-	super(nombre);
-	this.descripcion = descripcion;
-	this.lanzamiento = lanzamiento;
-	HashMap<String, Object> columnas = new HashMap<String, Object>();
-	columnas.put("nombre", nombre);
-	columnas.put("descripcion", descripcion);
-	columnas.put("lanzamiento", lanzamiento);
-	columnas.put("genero", this.getGenero());
-	columnas.put("plataforma", this.getPlataforma());
-	DAO.insertar("videojuego", columnas);
-}
+
 
 
 

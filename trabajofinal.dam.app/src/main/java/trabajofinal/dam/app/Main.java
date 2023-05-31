@@ -35,6 +35,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		Ventana v = new Ventana();
 		
+		
 			Videojuego videojuego1 = new Videojuego("God of War (2018)");
 			Videojuego videojuego2 = new Videojuego("Pokemon");
 			
