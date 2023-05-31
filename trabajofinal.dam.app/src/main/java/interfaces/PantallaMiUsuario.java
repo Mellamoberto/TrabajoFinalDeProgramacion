@@ -1,13 +1,16 @@
 package interfaces;
 
-import javax.swing.JPanel;
-import javax.swing.BoxLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.BorderLayout;
-import javax.swing.JScrollPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
@@ -15,24 +18,19 @@ import javax.swing.table.DefaultTableModel;
 import clases.Videojuego;
 import excepciones.VideojuegoNoExisteException;
 
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.SQLException;
-import java.awt.GridBagConstraints;
-
-public class PantallaResultado extends JPanel {
+public class PantallaMiUsuario extends JPanel {
 	private Ventana ventana;
 	private JTextField campoBuscador;
+
 	
-	public PantallaResultado(Ventana v) {
+	public PantallaMiUsuario(Ventana v) {
 		this.ventana=v;
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{43, 0, 42, 0, 79, 0, 0};
+		gridBagLayout.rowHeights = new int[]{43, 0, 0, 79, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JLabel labelDailyPlays = new JLabel("DAILY-PLAYS");
@@ -56,6 +54,16 @@ public class PantallaResultado extends JPanel {
 		gbc_botonInicio.gridy = 1;
 		add(botonInicio, gbc_botonInicio);
 		
+		campoBuscador = new JTextField();
+		campoBuscador.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_campoBuscador = new GridBagConstraints();
+		gbc_campoBuscador.fill = GridBagConstraints.HORIZONTAL;
+		gbc_campoBuscador.insets = new Insets(0, 0, 5, 5);
+		gbc_campoBuscador.gridx = 4;
+		gbc_campoBuscador.gridy = 1;
+		add(campoBuscador, gbc_campoBuscador);
+		campoBuscador.setColumns(10);
+		
 		JButton botonBuscar = new JButton("Buscar");
 		botonBuscar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -76,16 +84,6 @@ public class PantallaResultado extends JPanel {
 				}
 			}
 		});
-		
-		campoBuscador = new JTextField();
-		campoBuscador.setHorizontalAlignment(SwingConstants.CENTER);
-		GridBagConstraints gbc_campoBuscador = new GridBagConstraints();
-		gbc_campoBuscador.fill = GridBagConstraints.HORIZONTAL;
-		gbc_campoBuscador.insets = new Insets(0, 0, 5, 5);
-		gbc_campoBuscador.gridx = 4;
-		gbc_campoBuscador.gridy = 1;
-		add(campoBuscador, gbc_campoBuscador);
-		campoBuscador.setColumns(10);
 		
 		
 		GridBagConstraints gbc_botonBuscar = new GridBagConstraints();
@@ -108,29 +106,15 @@ public class PantallaResultado extends JPanel {
 		add(botonVideojuegos, gbc_botonVideojuegos);
 		
 		JButton botonUsuario = new JButton("Mi Usuario");
-		botonUsuario.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ventana.cambiarAPantalla(PantallaMiUsuario.class);
-			}
-		});
 		GridBagConstraints gbc_botonUsuario = new GridBagConstraints();
 		gbc_botonUsuario.insets = new Insets(0, 0, 5, 5);
 		gbc_botonUsuario.gridx = 7;
 		gbc_botonUsuario.gridy = 1;
 		add(botonUsuario, gbc_botonUsuario);
 		
-		JLabel labelResultados = new JLabel("RESULTADOS");
-		GridBagConstraints gbc_labelResultados = new GridBagConstraints();
-		gbc_labelResultados.insets = new Insets(0, 0, 5, 5);
-		gbc_labelResultados.gridx = 2;
-		gbc_labelResultados.gridy = 3;
-		add(labelResultados, gbc_labelResultados);
 		
-		
-		
-	}
-	
 
+	}
 
 }
+

@@ -75,7 +75,7 @@ public class PantallaLogin extends JPanel{
 			}
 		});
 		
-		JLabel labelTitulo = new JLabel("Pruebas Interfaces");
+		JLabel labelTitulo = new JLabel("DAILY-PLAYS");
 		labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		labelTitulo.setFont(new Font("Georgia", Font.PLAIN, 33));
 		GridBagConstraints gbc_labelTitulo = new GridBagConstraints();

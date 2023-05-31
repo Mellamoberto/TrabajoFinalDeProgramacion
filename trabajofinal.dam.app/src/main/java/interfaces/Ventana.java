@@ -37,6 +37,9 @@ public class Ventana extends JFrame {
 		if(clase.equals(PantallaInsertarJuegoEnBD.class)) {
 			this.setContentPane(new PantallaInsertarJuegoEnBD(this));
 		}
+		if(clase.equals(PantallaMiUsuario.class)) {
+			this.setContentPane(new PantallaMiUsuario(this));
+		}
 		this.getContentPane().setVisible(true);
 	}
 }

@@ -48,7 +48,7 @@ public class PantallaRegistro extends JPanel{
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		JLabel labelTitulo = new JLabel("Regístrate");
+		JLabel labelTitulo = new JLabel("Registrate");
 		labelTitulo.setForeground(new Color(255, 255, 255));
 		labelTitulo.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		GridBagConstraints gbc_labelTitulo = new GridBagConstraints();

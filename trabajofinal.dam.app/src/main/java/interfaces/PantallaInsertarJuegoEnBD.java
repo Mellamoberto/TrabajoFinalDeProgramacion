@@ -35,12 +35,17 @@ public class PantallaInsertarJuegoEnBD extends JPanel {
 	
 	public PantallaInsertarJuegoEnBD(Ventana v) {
 		this.ventana=v;
+		
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
+		
+		
+		
 		
 		JLabel labelTitulo = new JLabel("Inserta un Videojuego en nuestra BD");
 		labelTitulo.setFont(new Font("Tahoma", Font.BOLD, 18));

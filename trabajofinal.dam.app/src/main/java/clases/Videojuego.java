@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import utils.DAO;
 
@@ -29,17 +30,38 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	private GeneroVideojuego genero;
 	private PlataformaVideojuego plataforma;
 
-	public float puntuacionMedia() {
-		float nota = 0;
-		float sumatoriaPuntuaciones = 0;
-		for (short i = 0; i < reviews.size(); i++) {
-			sumatoriaPuntuaciones += reviews.get(i).getCalificacion();
-		}
-		nota = sumatoriaPuntuaciones / reviews.size();
-		return nota;
-	}
+	public float puntuacionMedia() throws SQLException {
+	    float nota = 0;
 
-	public Videojuego (String nombre, float nota, GeneroVideojuego genero, PlataformaVideojuego plataforma) {
+	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
+	    columnasSelect.add("calificacion");
+
+	    HashMap<String, Object> restricciones = new HashMap<>();
+	    restricciones.put("videojuego_nombre", this.getNombre());
+
+	    ArrayList<Object> resultado = DAO.consultar("review", columnasSelect, restricciones);
+
+	    float sumatoriaPuntuaciones = 0;
+	    for (Object obj : resultado) {
+	        if (obj instanceof Float) {
+	            sumatoriaPuntuaciones += (Float) obj;
+	        } else if (obj instanceof Integer) {
+	            sumatoriaPuntuaciones += (Integer) obj;
+	        }
+	    }
+
+	    if (!resultado.isEmpty()) {
+	        nota = sumatoriaPuntuaciones / resultado.size();
+	    }
+
+	    return nota;
+	}
+	
+
+	
+	
+
+	public Videojuego (String nombre, float nota, GeneroVideojuego genero, PlataformaVideojuego plataforma) throws SQLException {
 		super(nombre);
 		this.nota = puntuacionMedia();
 		this.genero = genero;
@@ -53,6 +75,49 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 		this.genero=genero;
 		this.plataforma=plataforma;
 	}
+	
+
+	
+public Videojuego(String nombre) {
+		super(nombre);
+	}
+
+
+
+/*	public List<Videojuego> mostrarVideojuego() {
+		List<Videojuego> mostraVdj = new ArrayList<>();
+		HashMap<String, Object> hM = new HashMap<>();
+        hM.put("nombre", this.getEmail());
+        LinkedHashSet<String> columnas = new LinkedHashSet<String>() {
+        	{
+        		add("nombre");
+        		add("email");
+        		add("pass");
+        		add("fechaRegistro");
+        		add("esModerador");
+        	}
+        };
+        
+     
+        
+        ArrayList<Object> consulta = DAO.consultar("usuario", columnas, hM);
+	} 
+	*/
+	
+	/*
+	public static void mostrarDetallesVideojuego (Videojuego videojuego) {
+		HashMap<String, Object> hM = new HashMap<>();
+        hM.put("nombre", this.getEmail());
+        LinkedHashSet<String> columnas = new LinkedHashSet<String>() {
+        	{
+        		add("nombre");
+        		add("email");
+        		add("pass");
+        		add("fechaRegistro");
+        		add("esModerador");
+        	}
+        }; 
+	}*/
 
 	
 /*
@@ -91,9 +156,11 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 		DAO.insertar("videojuego", columnas);
 	}
 
+	
+	/*
 	public Videojuego(String nombre) throws SQLException/*, UsuarioNoExisteException*/ {
-		super(nombre);
-		this.reviews = new ArrayList<>();
+		//super(nombre);
+		//this.reviews = new ArrayList<>();
 		
 /*
 		HashMap<String, Object> hM = new HashMap<>();
@@ -197,11 +264,19 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	}
 
 	public int compareTo(Videojuego o) {
-		// TODO Auto-generated method stub
-		if (this.puntuacionMedia() == o.puntuacionMedia()) {
-			return this.getNombre().compareTo(o.getNombre());
-		}
-		return (int) (this.puntuacionMedia() - o.puntuacionMedia());
+	    try {
+	        if (this.puntuacionMedia() == o.puntuacionMedia()) {
+	            return o.getNombre().compareTo(this.getNombre());
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    try {
+	        return (int) (o.puntuacionMedia() - this.puntuacionMedia());
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return 0;
 	}
 
 }
