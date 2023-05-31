@@ -63,15 +63,7 @@ public class Main {
 		    } else {
 		        System.out.println("Ambos videojuegos tienen la misma puntuación media");
 		    }
-		
-
-
-
-
-
-
-	
-	
-	
+			
+	}
 	
 }
