@@ -36,7 +36,7 @@ public class Main {
 		Ventana v = new Ventana();
 
 		Scanner sc = new Scanner(System.in);
-
+/*
 		Usuario user = null;
 		Usuario newUser = null;
 		String email = null;
@@ -46,7 +46,7 @@ public class Main {
 		TreeSet<Videojuego> listaDeJuegosFavoritos = new TreeSet<Videojuego>();
 		byte ocp0 = 0;
 		byte opc1 = 0;
-		
+	
 		do {
 		try {
 
@@ -117,18 +117,7 @@ public class Main {
 													
 													switch (opc3) {
 													case 1:
-														try {
-															try {
-																
-																user.consultarListaVideojuego(listaDeJuegosFavoritos);
-															} catch (UsuarioNoExisteException e) {
-																// TODO Auto-generated catch block
-																e.printStackTrace();
-															}
-														} catch (SQLException e) {
-															// TODO Auto-generated catch block
-															e.printStackTrace();
-														}
+													
 														
 													/*	
 														TreeSet<Videojuego> videojuegosFavoritos = user.getVideojuegosFavoritos();
@@ -147,13 +136,13 @@ public class Main {
 											            	listaDeJuegosFavoritos.add(newVideojuego);
 											            }
 														*/
-														break;
+	//													break;
 													}
 						
-												} while (opc3 != 7);
-												break;
-											case 2:
-												System.out.println("Introduce el nombre del videojuego");
+	//											} while (opc3 != 7);
+	//											break;
+	//										case 2:
+											/*	System.out.println("Introduce el nombre del videojuego");
 												nombre = sc.nextLine();
 												System.out.println("Introduce una descripcion");
 												email = sc.nextLine();
@@ -176,7 +165,8 @@ public class Main {
 												System.out.println(listaDeVideojuegos);
 						
 												System.out.println();
-						
+												*/
+/*						
 												break;
 											case 3:
 			
@@ -188,9 +178,6 @@ public class Main {
 													user.meterVideojuegoEnLista(videojuegoElegido, listaDeJuegosFavoritos);
 													
 												} catch (SQLException e) {
-													// TODO Auto-generated catch block
-													e.printStackTrace();
-												} catch (UsuarioNoExisteException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												}
@@ -206,9 +193,6 @@ public class Main {
 													user.hacerReview(videojuegoElegido);
 													
 												} catch (SQLException e) {
-													// TODO Auto-generated catch block
-													e.printStackTrace();
-												} catch (UsuarioNoExisteException e) {
 													// TODO Auto-generated catch block
 													e.printStackTrace();
 												}
@@ -289,7 +273,7 @@ public class Main {
 		
 	}
 	
-	
+	*/
 	
 	
 	

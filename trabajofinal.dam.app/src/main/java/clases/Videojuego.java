@@ -2,12 +2,15 @@ package clases;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
+
 
 import enums.GeneroVideojuego;
 import enums.PlataformaVideojuego;
 import excepciones.PassInvalidaException;
 import excepciones.UsuarioNoExisteException;
+import excepciones.VideojuegoNoExisteException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,11 +22,10 @@ import utils.DAO;
 public class Videojuego extends CosaConNombre implements Comparable<Videojuego> {
 	private float nota;
 	private String descripcion;
-	private String lanzamiento;
+	private LocalDate lanzamiento;
 	private Desarrolladora desarrolladora;
 	private Distribuidora distribuidora;
 	private ArrayList<Review> reviews;
-	private int numComentarios;
 	private GeneroVideojuego genero;
 	private PlataformaVideojuego plataforma;
 
@@ -42,6 +44,14 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 		this.nota = puntuacionMedia();
 		this.genero = genero;
 		this.plataforma = plataforma;
+	}
+	
+	public Videojuego (String nombre, String descripcion, LocalDate lanzamiento, GeneroVideojuego genero, PlataformaVideojuego plataforma) {
+		super(nombre);
+		this.descripcion=descripcion;
+		this.lanzamiento=lanzamiento;
+		this.genero=genero;
+		this.plataforma=plataforma;
 	}
 
 	
@@ -68,23 +78,24 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 
 */
 	
-	public Videojuego(String nombre, String descripcion, String lanzamiento) throws SQLException {
+	public Videojuego(String nombre, String descripcion, LocalDate lanzamiento) throws SQLException {
 		super(nombre);
 		this.descripcion = descripcion;
 		this.lanzamiento = lanzamiento;
-		this.numComentarios = 0;
 		HashMap<String, Object> columnas = new HashMap<String, Object>();
 		columnas.put("nombre", nombre);
 		columnas.put("descripcion", descripcion);
 		columnas.put("lanzamiento", lanzamiento);
-		columnas.put("numComentarios", this.numComentarios);
+		columnas.put("genero", this.getGenero());
+		columnas.put("plataforma", this.getPlataforma());
 		DAO.insertar("videojuego", columnas);
 	}
 
-	public Videojuego(String nombre) throws SQLException, UsuarioNoExisteException {
+	public Videojuego(String nombre) throws SQLException/*, UsuarioNoExisteException*/ {
 		super(nombre);
 		this.reviews = new ArrayList<>();
-
+		
+/*
 		HashMap<String, Object> hM = new HashMap<>();
 		hM.put("nombre", nombre);
 
@@ -108,8 +119,9 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 					this.setNombre(objNombre.toString());
 				}
 			}
-		}
+		}*/
 	}
+	
 
 	public void agregarReview(Review review) {
 		if (reviews == null) {
@@ -127,11 +139,11 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 		this.descripcion = descripcion;
 	}
 
-	public String getLanzamiento() {
+	public LocalDate getLanzamiento() {
 		return lanzamiento;
 	}
 
-	public void setLanzamiento(String lanzamiento) {
+	public void setLanzamiento(LocalDate lanzamiento) {
 		this.lanzamiento = lanzamiento;
 	}
 
@@ -159,13 +171,7 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 		this.reviews = reviews;
 	}
 
-	public int getNumComentarios() {
-		return numComentarios;
-	}
 
-	public void setNumComentarios(int numComentarios) {
-		this.numComentarios = numComentarios;
-	}
 
 	public GeneroVideojuego getGenero() {
 		return genero;
@@ -187,7 +193,7 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	public String toString() {
 		return super.getNombre() + "\n\t" + descripcion + " '" + "\n\tLanzado el:" + lanzamiento + "Desarrollado por:"
 				+ desarrolladora + "Distribuido por:" + distribuidora + "\n\tGenero: " + genero + "\n\tPlataforma: "
-				+ plataforma + "Reviews=" + reviews + "Numero de Comentarios=" + numComentarios;
+				+ plataforma + "Reviews=" + reviews;
 	}
 
 	public int compareTo(Videojuego o) {

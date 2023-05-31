@@ -7,6 +7,7 @@ import java.util.LinkedHashSet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,6 +17,7 @@ import java.util.TreeSet;
 
 import excepciones.PassInvalidaException;
 import excepciones.UsuarioNoExisteException;
+import excepciones.VideojuegoNoExisteException;
 import utils.DAO;
 
 public class Usuario extends CosaConNombre implements Comparable<Usuario> {
@@ -179,7 +181,7 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 	    
 	}
 	
-	public void consultarListaVideojuego(TreeSet<Videojuego>listaVideojuego ) throws SQLException, UsuarioNoExisteException {
+	public void consultarListaVideojuego(TreeSet<Videojuego>listaVideojuego ) throws SQLException, VideojuegoNoExisteException {
 		Scanner sc = new Scanner (System.in);
 		System.out.println("Que lista quieres consultar:"
 				+ "1-Favoritos"
@@ -198,7 +200,7 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 		    }, hM);
 		    
 		    if (consulta.isEmpty()) {
-		        throw new UsuarioNoExisteException("El videojuego con el nombre " + super.getNombre() + " no existe.");
+		        throw new VideojuegoNoExisteException("El videojuego con el nombre " + super.getNombre() + " no existe.");
 		    } else {
 		        Iterator<Object> iterator = consulta.iterator();
 		        while (iterator.hasNext()) {
@@ -215,6 +217,66 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 		case 2:
 		    break;
 		}
+	}
+	
+	
+	public void buscarVideojuego (Videojuego videojuego) throws SQLException, VideojuegoNoExisteException {
+		HashMap<String, Object> hM = new HashMap<>();
+		hM.put("nombre", videojuego.getNombre());
+
+		LinkedHashSet<String> columnas = new LinkedHashSet<String>() {
+			{
+				add("nombre");
+			}
+		};
+		ArrayList<Object> consulta = DAO.consultar("videojuego", columnas, hM);
+		
+		if (consulta.isEmpty()) {
+			throw new VideojuegoNoExisteException ("Ese videojuego no se encuentra en la pagina");
+		}else {
+			Iterator<Object> iterator = consulta.iterator();
+			while (iterator.hasNext()) {
+				Object obj = iterator.next();
+				if (obj instanceof Usuario) {
+					Usuario usuario = (Usuario) obj;
+					Object objNombre = consulta.get(0);
+					videojuego.setNombre(objNombre.toString());
+				}
+			}
+		}
+	}
+	
+	public void meterVideojuegoEnBD (Videojuego videojuego) throws SQLException {
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Introduce el nombre del videojuego");
+		String nombre = sc.nextLine();
+		videojuego.setNombre(nombre);
+		
+		System.out.println("Introduce una descripcion");
+		String descripcion = sc.nextLine();
+		videojuego.setDescripcion(descripcion);
+		
+	    System.out.println("Introduce la fecha (formato: yyyy-MM-dd):");
+	    String fechaStr = sc.nextLine();
+	    
+	    LocalDate fecha;
+	    try {
+	        fecha = LocalDate.parse(fechaStr);
+	        System.out.println("Fecha ingresada: " + fecha);
+	    } catch (DateTimeParseException e) {
+	        System.out.println("Fecha ingresada en un formato inválido.");
+	    }
+
+		
+		HashMap<String, Object> columnas = new HashMap<String, Object>();
+		columnas.put("nombre", nombre);
+		columnas.put("descripcion", descripcion);
+		columnas.put("lanzamiento", fechaStr);
+//		columnas.put("genero", videojuego.getGenero());
+//		columnas.put("plataforma", videojuego.getPlataforma());
+
+		DAO.insertar("Videojuego", columnas);
 	}
 
 

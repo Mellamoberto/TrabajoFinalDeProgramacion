@@ -15,6 +15,9 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import enums.GeneroVideojuego;
+import enums.PlataformaVideojuego;
+
 public class DAO {
 	private static Connection conexion;
 
@@ -40,35 +43,39 @@ public class DAO {
 	}
 
 	public static int insertar(String tabla, HashMap<String, Object> columnas) throws SQLException {
-		Statement smt = conectar();
-		String consulta = "insert into " + tabla + " (";
-		Iterator it = columnas.keySet().iterator();
-		while (it.hasNext()) {
-			consulta += (String) it.next() + ",";
-		}
-		consulta = consulta.substring(0, consulta.length() - 1);
-		consulta += ") values (";
-		it = columnas.values().iterator();
-		while (it.hasNext()) {
-			Object elemento = it.next();
-			if (elemento instanceof LocalDate) {
-				LocalDate fecha = (LocalDate) elemento;
-				String fechaString = fecha.toString();
-				consulta += "'" + fechaString + "',";
-			} else if (elemento.getClass() != String.class) {
-				consulta += elemento + ",";
-			} else if (elemento.getClass() == boolean.class) {
+	    Statement smt = conectar();
+	    String consulta = "insert into " + tabla + " (";
+	    Iterator it = columnas.keySet().iterator();
+	    while (it.hasNext()) {
+	        consulta += it.next() + ",";
+	    }
+	    consulta = consulta.substring(0, consulta.length() - 1);
+	    consulta += ") values (";
+	    it = columnas.values().iterator();
+	    while (it.hasNext()) {
+	        Object elemento = it.next();
+	        if (elemento instanceof LocalDate) {
+	            LocalDate fecha = (LocalDate) elemento;
+	            String fechaString = fecha.toString();
+	            consulta += "'" + fechaString + "',";
+	        } else if (elemento.getClass() == GeneroVideojuego.class) {
+	            consulta += "'" + ((GeneroVideojuego) elemento).name() + "',";
+	        }else if (elemento.getClass() == PlataformaVideojuego.class) {
+	            consulta += "'" + ((PlataformaVideojuego) elemento).name() + "',";
+	        } else if (elemento.getClass() != String.class) {
+	            consulta += elemento + ",";
+	        } else if (elemento.getClass() == boolean.class) {
 				consulta += "'" + (String) elemento + "',";
 			} else {
-				consulta += "'" + (String) elemento + "',";
-			}
-		}
-		consulta = consulta.substring(0, consulta.length() - 1);
-		consulta += ")";
-		System.out.println(consulta);
-		int ret = smt.executeUpdate(consulta);
-		desconectar(smt);
-		return ret;
+	            consulta += "'" + elemento + "',";
+	        }
+	    }
+	    consulta = consulta.substring(0, consulta.length() - 1);
+	    consulta += ")";
+	    System.out.println(consulta);
+	    int ret = smt.executeUpdate(consulta);
+	    desconectar(smt);
+	    return ret;
 	}
 
 	public static int borrar(String tabla, HashMap<String, Object> columnas) throws SQLException {
