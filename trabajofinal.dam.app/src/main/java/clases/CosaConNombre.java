@@ -11,7 +11,6 @@ public class CosaConNombre {
 	public CosaConNombre() {}
 	
 	
-
 	public String getNombre() {
 		return nombre;
 	}
