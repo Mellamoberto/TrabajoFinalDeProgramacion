@@ -83,6 +83,20 @@ public Videojuego(String nombre) {
 	}
 
 
+public Videojuego(String nombre, String descripcion, LocalDate lanzamiento) throws SQLException {
+	super(nombre);
+	this.descripcion = descripcion;
+	this.lanzamiento = lanzamiento;
+	HashMap<String, Object> columnas = new HashMap<String, Object>();
+	columnas.put("nombre", nombre);
+	columnas.put("descripcion", descripcion);
+	columnas.put("lanzamiento", lanzamiento);
+	columnas.put("genero", this.getGenero());
+	columnas.put("plataforma", this.getPlataforma());
+	DAO.insertar("videojuego", columnas);
+}
+
+
 
 /*	public List<Videojuego> mostrarVideojuego() {
 		List<Videojuego> mostraVdj = new ArrayList<>();
@@ -97,8 +111,6 @@ public Videojuego(String nombre) {
         		add("esModerador");
         	}
         };
-        
-     
         
         ArrayList<Object> consulta = DAO.consultar("usuario", columnas, hM);
 	} 
@@ -143,18 +155,7 @@ public Videojuego(String nombre) {
 
 */
 	
-	public Videojuego(String nombre, String descripcion, LocalDate lanzamiento) throws SQLException {
-		super(nombre);
-		this.descripcion = descripcion;
-		this.lanzamiento = lanzamiento;
-		HashMap<String, Object> columnas = new HashMap<String, Object>();
-		columnas.put("nombre", nombre);
-		columnas.put("descripcion", descripcion);
-		columnas.put("lanzamiento", lanzamiento);
-		columnas.put("genero", this.getGenero());
-		columnas.put("plataforma", this.getPlataforma());
-		DAO.insertar("videojuego", columnas);
-	}
+
 
 	
 	/*
