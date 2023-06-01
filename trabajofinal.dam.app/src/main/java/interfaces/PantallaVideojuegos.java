@@ -131,16 +131,18 @@ public class PantallaVideojuegos extends JPanel {
 			}
 		});
 		
-		String x = "patata";
-		String tituloVideojuego = DAO.obtenerTituloVideojuego(x);
-		JLabel labelTitulo = new JLabel(DAO.obtenerTituloVideojuego(x));
+		
+		String tituloVideojuego = DAO.obtenerTituloVideojuego();
+		JLabel labelTitulo = new JLabel(tituloVideojuego);
 		GridBagConstraints gbc_labelTitulo = new GridBagConstraints();
 		gbc_labelTitulo.insets = new Insets(0, 0, 5, 5);
 		gbc_labelTitulo.gridx = 3;
 		gbc_labelTitulo.gridy = 3;
 		add(labelTitulo, gbc_labelTitulo);
 		
-		JLabel labelNota = new JLabel("New label");
+		
+		String nota = DAO.obtenerNota()+"";
+		JLabel labelNota = new JLabel(nota);
 		GridBagConstraints gbc_labelNota = new GridBagConstraints();
 		gbc_labelNota.insets = new Insets(0, 0, 5, 5);
 		gbc_labelNota.gridx = 4;
@@ -155,7 +157,9 @@ public class PantallaVideojuegos extends JPanel {
 		gbc_labelImagen.gridy = 4;
 		add(labelImagen, gbc_labelImagen);
 		
-		campolDescripcion = new JTextField();
+		
+		String descripcion = DAO.obtenerDescripcion();
+		campolDescripcion = new JTextField(descripcion);
 		GridBagConstraints gbc_campolDescripcion = new GridBagConstraints();
 		gbc_campolDescripcion.insets = new Insets(0, 0, 5, 5);
 		gbc_campolDescripcion.fill = GridBagConstraints.HORIZONTAL;

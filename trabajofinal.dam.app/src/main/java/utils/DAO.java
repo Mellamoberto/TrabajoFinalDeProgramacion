@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import clases.Videojuego;
 import enums.GeneroVideojuego;
 import enums.PlataformaVideojuego;
 
@@ -205,23 +206,85 @@ public class DAO {
 	}
 	
 	
-	public static String obtenerTituloVideojuego(String tituloVideojuego) throws SQLException {
+	public static String obtenerTituloVideojuego() throws SQLException {
 	    String tabla = "videojuego";
-	    String detalle = null;
+	    String titulo = null;
 	    
 	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
 	    columnasSelect.add("nombre");
 	    ArrayList<Object> resultado = DAO.consultar(tabla, columnasSelect, new HashMap<>());
+	    
 
-	    if (!resultado.isEmpty() && resultado.contains(tituloVideojuego)) {
-	    	return tituloVideojuego;
+
+	    if (!resultado.isEmpty()) {
+	    	for(Object obj : resultado) {
+	    		if (obj instanceof String) {
+	    			titulo = (String) obj;
+	    		}
+	    	}
 	    }
 
-	    return "";
+	    return titulo;
+	}
+	
+	
+	public static Float obtenerNota() throws SQLException {
+	    String tabla = "videojuego";
+	    Float nota = (Float) null;
+	    
+	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
+	    columnasSelect.add("nota");
+	    ArrayList<Object> resultado = DAO.consultar(tabla, columnasSelect, new HashMap<>());
+
+	    if (!resultado.isEmpty()) {
+	    	for(Object obj : resultado) {
+	    		if (obj instanceof Float) {
+	    			nota = (Float) obj;
+	    			
+	    		}
+	    	}
+	    }
+	    return nota;
 	}
 	
 	
 	
+	
+	public static String obtenerDescripcion() throws SQLException {
+	    String tabla = "videojuego";
+	    String descripcion = null;
+	    
+	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
+	    columnasSelect.add("descripcion");
+	    ArrayList<Object> resultado = DAO.consultar(tabla, columnasSelect, new HashMap<>());
+	    
+
+
+	    if (!resultado.isEmpty()) {
+	    	for(Object obj : resultado) {
+	    		if (obj instanceof String) {
+	    			descripcion = (String) obj;
+	    		}
+	    	}
+	    }
+
+	    return descripcion;
+	}
+	
+	
+	
+	
+	public static List<Object> obtenerResultados() throws SQLException {
+	    String tabla = "videojuego";
+	    String nombre = null;
+	    
+	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
+	    columnasSelect.add("nombre");
+	    ArrayList<Object> resultado = DAO.consultar(tabla, columnasSelect, new HashMap<>());
+	    
+
+	    return resultado;
+	}
 	
 	
 	
