@@ -32,9 +32,8 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	
 //	public static ArrayList<Videojuego> busqueda(String nombre){
 		//Usa constructor con el like para que te devuelva aqui todos los juegos que contengan
-		//El texto pasado por argumentos. Usa la misma técnica que getTodos
+		//El texto pasado por argumentos. Usa la misma tï¿½cnica que getTodos
 //	}
-
 	public float puntuacionMedia() throws SQLException {
 	    float nota = 0;
 
@@ -44,9 +43,11 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	    HashMap<String, Object> restricciones = new HashMap<>();
 	    restricciones.put("videojuego_nombre", this.getNombre());
 
-	    ArrayList<Object> resultado = DAO.consultar("review", columnasSelect, restricciones);
+	    ArrayList<Object> resultado = DAO.consultarCalificacion("review", columnasSelect, restricciones);
 
+	    // Calcular la puntuaciÃ³n media
 	    float sumatoriaPuntuaciones = 0;
+	    int cantidadCalificaciones = resultado.size();
 	    for (Object obj : resultado) {
 	        if (obj instanceof Float) {
 	            sumatoriaPuntuaciones += (Float) obj;
@@ -55,8 +56,8 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	        }
 	    }
 
-	    if (!resultado.isEmpty()) {
-	        nota = sumatoriaPuntuaciones / resultado.size();
+	    if (cantidadCalificaciones > 0) {
+	        nota = sumatoriaPuntuaciones / cantidadCalificaciones;
 	    }
 
 	    return nota;

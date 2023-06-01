@@ -1,8 +1,11 @@
 package clases;
 
+import java.time.LocalDate;
+
 public class Review extends CosaConNombre {
 	private byte id;
-	private float calificacion; //De 0 a 10
+	private float calificacion;
+	private LocalDate fechaCalificacion;
 	private String comentario;
 	private int duracion;
 	private Usuario usuario;
@@ -26,8 +29,6 @@ public class Review extends CosaConNombre {
 	}
 	
 	
-	
-
 
 
 	public float getCalificacion() {

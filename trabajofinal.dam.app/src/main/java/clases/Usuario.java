@@ -62,6 +62,11 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 		
 	
 	
+	public Usuario(String nombre) {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public void login (Usuario user) throws SQLException, UsuarioNoExisteException, PassInvalidaException {
 		HashMap<String, Object> hM = new HashMap<>();
         hM.put("email", this.getEmail());

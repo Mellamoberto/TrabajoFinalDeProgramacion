@@ -36,33 +36,30 @@ public class Main {
 		Ventana v = new Ventana();
 		
 		
-			Videojuego videojuego1 = new Videojuego("God of War (2018)");
+			Videojuego videojuego1 = new Videojuego("God of War");
 			Videojuego videojuego2 = new Videojuego("Pokemon");
 			
 			try {
-				// Calcular la puntuación media del videojuego
+				// Calcular la puntuaciï¿½n media del videojuego
 				float puntuacionMedia = videojuego1.puntuacionMedia();
 				float puntuacionMedia2 = videojuego2.puntuacionMedia();
 				
-				// Imprimir la puntuación media
-				System.out.println("Puntuación media: " + puntuacionMedia);
-				System.out.println("Puntuación media: " + puntuacionMedia2);
+				// Imprimir la puntuaciï¿½n media
+				System.out.println("Puntuacion media: " + puntuacionMedia);
+				System.out.println("Puntuacion media: " + puntuacionMedia2);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
-			
-			
-			 // Comparar los videojuegos utilizando el método compareTo
+
 		    int resultado = videojuego1.compareTo(videojuego2);
 
-		    // Imprimir el resultado de la comparación
+
 		    if (resultado < 0) {
 		        System.out.println(videojuego1.getNombre() + " es mejor que " + videojuego2.getNombre());
 		    } else if (resultado > 0) {
 		        System.out.println(videojuego2.getNombre() + " es mejor que " + videojuego1.getNombre());
 		    } else {
-		        System.out.println("Ambos videojuegos tienen la misma puntuación media");
+		        System.out.println("Ambos videojuegos tienen la misma puntuacion media");
 		    }
 			
 	}

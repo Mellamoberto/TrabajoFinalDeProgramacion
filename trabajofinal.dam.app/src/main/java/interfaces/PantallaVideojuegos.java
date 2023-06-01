@@ -20,20 +20,21 @@ import java.awt.Insets;
 import clases.Videojuego;
 import excepciones.UsuarioNoExisteException;
 import excepciones.VideojuegoNoExisteException;
+import utils.DAO;
 
 public class PantallaVideojuegos extends JPanel {
 	private Ventana ventana;
 	private JTextField campoBuscador;
-	private JTextField textField;
+	private JTextField campolDescripcion;
 	
-	public PantallaVideojuegos(Ventana v) {
+	public PantallaVideojuegos(Ventana v) throws SQLException {
 		this.ventana=v;
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{43, 0, 13, 0, 79, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE, 1.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE, 1.0};
 		setLayout(gridBagLayout);
 		
 		JLabel labelDailyPlays = new JLabel("DAILY-PLAYS");
@@ -88,7 +89,7 @@ public class PantallaVideojuegos extends JPanel {
 			}
 		});
 		
-		
+
 		GridBagConstraints gbc_botonBuscar = new GridBagConstraints();
 		gbc_botonBuscar.insets = new Insets(0, 0, 5, 5);
 		gbc_botonBuscar.gridx = 5;
@@ -130,36 +131,38 @@ public class PantallaVideojuegos extends JPanel {
 			}
 		});
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 3;
-		gbc_lblNewLabel_1.gridy = 3;
-		add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_2.gridx = 4;
-		gbc_lblNewLabel_2.gridy = 3;
-		add(lblNewLabel_2, gbc_lblNewLabel_2);
+		String tituloVideojuego = DAO.obtenerTituloVideojuego();
+		JLabel labelTitulo = new JLabel(DAO.obtenerTituloVideojuego());
+		GridBagConstraints gbc_labelTitulo = new GridBagConstraints();
+		gbc_labelTitulo.insets = new Insets(0, 0, 5, 5);
+		gbc_labelTitulo.gridx = 3;
+		gbc_labelTitulo.gridy = 3;
+		add(labelTitulo, gbc_labelTitulo);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 3;
-		gbc_lblNewLabel.gridy = 4;
-		add(lblNewLabel, gbc_lblNewLabel);
+		JLabel labelNota = new JLabel("New label");
+		GridBagConstraints gbc_labelNota = new GridBagConstraints();
+		gbc_labelNota.insets = new Insets(0, 0, 5, 5);
+		gbc_labelNota.gridx = 4;
+		gbc_labelNota.gridy = 3;
+		add(labelNota, gbc_labelNota);
 		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 4;
-		gbc_textField.gridy = 4;
-		add(textField, gbc_textField);
-		textField.setColumns(10);
+		JLabel labelImagen = new JLabel("New label");
+		GridBagConstraints gbc_labelImagen = new GridBagConstraints();
+		gbc_labelImagen.anchor = GridBagConstraints.EAST;
+		gbc_labelImagen.insets = new Insets(0, 0, 5, 5);
+		gbc_labelImagen.gridx = 3;
+		gbc_labelImagen.gridy = 4;
+		add(labelImagen, gbc_labelImagen);
+		
+		campolDescripcion = new JTextField();
+		GridBagConstraints gbc_campolDescripcion = new GridBagConstraints();
+		gbc_campolDescripcion.insets = new Insets(0, 0, 5, 5);
+		gbc_campolDescripcion.fill = GridBagConstraints.HORIZONTAL;
+		gbc_campolDescripcion.gridx = 4;
+		gbc_campolDescripcion.gridy = 4;
+		add(campolDescripcion, gbc_campolDescripcion);
+		campolDescripcion.setColumns(10);
 		GridBagConstraints gbc_botonInsertarBD = new GridBagConstraints();
 		gbc_botonInsertarBD.fill = GridBagConstraints.HORIZONTAL;
 		gbc_botonInsertarBD.gridwidth = 4;

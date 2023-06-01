@@ -1,5 +1,7 @@
 package interfaces;
 
+import java.sql.SQLException;
+
 import javax.swing.JFrame;
 
 import clases.Usuario;
@@ -32,7 +34,12 @@ public class Ventana extends JFrame {
 			this.setContentPane(new PantallaResultado(this));
 		}
 		if(clase.equals(PantallaVideojuegos.class)) {
-			this.setContentPane(new PantallaVideojuegos(this));
+			try {
+				this.setContentPane(new PantallaVideojuegos(this));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if(clase.equals(PantallaInsertarJuegoEnBD.class)) {
 			this.setContentPane(new PantallaInsertarJuegoEnBD(this));

@@ -178,6 +178,57 @@ public class DAO {
 		desconectar(smt);
 		return fila;
 	}
+	
+	
+	
+	
+	public static ArrayList<Object> consultarCalificacion(String tabla, LinkedHashSet<String> columnasSelect, HashMap<String, Object> restricciones) throws SQLException {
+	    Statement smt = conectar();
+
+	    String queryFechaMaxima = "SELECT MAX(fecha_calificacion) FROM " + tabla + " WHERE videojuego_nombre='" + restricciones.get("videojuego_nombre") + "'";
+	    ResultSet cursorFechaMaxima = smt.executeQuery(queryFechaMaxima);
+	    cursorFechaMaxima.next();
+	    Object fechaMaxima = cursorFechaMaxima.getObject(1);
+
+	    String queryCalificacion = "SELECT calificacion FROM " + tabla + " WHERE videojuego_nombre='" + restricciones.get("videojuego_nombre") + "' AND fecha_calificacion='" + fechaMaxima.toString() + "'";
+
+	    System.out.println(queryCalificacion);
+	    ResultSet cursorCalificacion = smt.executeQuery(queryCalificacion);
+	    ArrayList<Object> fila = new ArrayList<Object>();
+	    while (cursorCalificacion.next()) {
+	        Object valor = cursorCalificacion.getObject(1);
+	        fila.add(valor);
+	    }
+	    desconectar(smt);
+	    return fila;
+	}
+	
+	
+	public static String obtenerTituloVideojuego() throws SQLException {
+	    String tituloVideojuego = null;
+	    String tabla = "videojuego";
+	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
+	    columnasSelect.add("nombre");
+
+	    ArrayList<Object> resultado = DAO.consultar(tabla, columnasSelect, new HashMap<>());
+
+	    if (!resultado.isEmpty()) {
+	        Object obj = resultado.get(0);
+	        if (obj instanceof String) {
+	            tituloVideojuego = (String) obj;
+	        }
+	    }
+
+	    return tituloVideojuego;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public static int actualizar(String tabla, HashMap<String, Object> datosAModificar,
 			HashMap<String, Object> restricciones) throws SQLException {
