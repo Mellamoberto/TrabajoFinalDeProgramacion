@@ -74,10 +74,10 @@ public class PantallaInicio extends JPanel  {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-				String nombreVideojuego = campoBuscador.getText();
+				String nombreVideojuego = campoBuscador.getText().trim();
 					Videojuego videojuegoBuscado = new Videojuego (nombreVideojuego);
 						ventana.usuarioLogado.buscarVideojuego(videojuegoBuscado);
-					if (nombreVideojuego.equals(videojuegoBuscado.getNombre())) {
+					if (nombreVideojuego.equalsIgnoreCase(videojuegoBuscado.getNombre().trim())) {
 						ventana.cambiarAPantalla(PantallaResultado.class);
 					}
 				} catch (SQLException e1) {

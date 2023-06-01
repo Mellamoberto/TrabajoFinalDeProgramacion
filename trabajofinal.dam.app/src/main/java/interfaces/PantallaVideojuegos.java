@@ -131,9 +131,9 @@ public class PantallaVideojuegos extends JPanel {
 			}
 		});
 		
-		
-		String tituloVideojuego = DAO.obtenerTituloVideojuego();
-		JLabel labelTitulo = new JLabel(DAO.obtenerTituloVideojuego());
+		String x = "patata";
+		String tituloVideojuego = DAO.obtenerTituloVideojuego(x);
+		JLabel labelTitulo = new JLabel(DAO.obtenerTituloVideojuego(x));
 		GridBagConstraints gbc_labelTitulo = new GridBagConstraints();
 		gbc_labelTitulo.insets = new Insets(0, 0, 5, 5);
 		gbc_labelTitulo.gridx = 3;

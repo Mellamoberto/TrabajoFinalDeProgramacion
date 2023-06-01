@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -204,22 +205,19 @@ public class DAO {
 	}
 	
 	
-	public static String obtenerTituloVideojuego() throws SQLException {
-	    String tituloVideojuego = null;
+	public static String obtenerTituloVideojuego(String tituloVideojuego) throws SQLException {
 	    String tabla = "videojuego";
+	    String detalle = null;
+	    
 	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
 	    columnasSelect.add("nombre");
-
 	    ArrayList<Object> resultado = DAO.consultar(tabla, columnasSelect, new HashMap<>());
 
-	    if (!resultado.isEmpty()) {
-	        Object obj = resultado.get(0);
-	        if (obj instanceof String) {
-	            tituloVideojuego = (String) obj;
-	        }
+	    if (!resultado.isEmpty() && resultado.contains(tituloVideojuego)) {
+	    	return tituloVideojuego;
 	    }
 
-	    return tituloVideojuego;
+	    return "";
 	}
 	
 	

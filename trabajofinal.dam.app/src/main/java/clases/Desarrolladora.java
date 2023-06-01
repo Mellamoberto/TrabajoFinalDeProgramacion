@@ -2,14 +2,13 @@ package clases;
 
 import java.util.TreeSet;
 
-public class Desarrolladora extends CosaConNombre {
+public class Desarrolladora extends EmpresaVideojuegos {
 	private TreeSet<Videojuego> listaVideojuegos;
 	
 	
 
 	public Desarrolladora(String nombre, TreeSet<Videojuego> listaVideojuegos) {
-		super(nombre);
-		this.listaVideojuegos = listaVideojuegos;
+		super(nombre, listaVideojuegos);
 	}
 	
 	
@@ -29,6 +28,11 @@ public class Desarrolladora extends CosaConNombre {
 		return "Desarrolladora [listaVideojuegos=" + listaVideojuegos + "]";
 	}
 	
+
+	public String mostrarListaVideojuegos (TreeSet<Videojuego> listaVideojuegos) {
+		String msg ="Juegos desarrollados por "+this.getNombre()+":"+listaVideojuegos;
+		return msg;
+	}
 	
 	
 }
