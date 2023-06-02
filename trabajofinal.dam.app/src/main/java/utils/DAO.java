@@ -206,25 +206,37 @@ public class DAO {
 	}
 	
 	
-	public static String obtenerTituloVideojuego() throws SQLException {
-	    String tabla = "videojuego";
-	    String titulo = null;
+	public static List<Videojuego> obtenerDetallesVideojuego() throws SQLException {
+	    
+		HashMap<String, Object> restricciones = new HashMap<>();
+		restricciones.put("videojuego_nombre", Videojuego.class);
+		
+		String tabla = "videojuego";
+		 
+	    
 	    
 	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
 	    columnasSelect.add("nombre");
-	    ArrayList<Object> resultado = DAO.consultar(tabla, columnasSelect, new HashMap<>());
+	    columnasSelect.add("nota");
+	    columnasSelect.add("descripcion");
+	    columnasSelect.add("lanzamiento");
+	    columnasSelect.add("genero");
+	    columnasSelect.add("plataforma");
+	    columnasSelect.add("imagen");
+	    ArrayList<Object> resultado = DAO.consultar(tabla, columnasSelect, restricciones);
+	    
+	    
 	    
 
-
-	    if (!resultado.isEmpty()) {
+	/*    if (!resultado.isEmpty()) {
 	    	for(Object obj : resultado) {
 	    		if (obj instanceof String) {
 	    			titulo = (String) obj;
 	    		}
 	    	}
 	    }
-
-	    return titulo;
+*/
+	    return obtenerDetallesVideojuego();
 	}
 	
 	

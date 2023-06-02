@@ -2,11 +2,15 @@ package interfaces;
 
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
+import java.awt.Image;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -27,6 +31,7 @@ import javax.swing.SwingConstants;
 public class PantallaInicio extends JPanel  {
 	private Ventana ventana;
 	private JTextField campoBuscador;
+	private JLabel labelImagenGoW;
 	
 	public PantallaInicio(Ventana v) {
 		this.ventana=v;
@@ -35,7 +40,7 @@ public class PantallaInicio extends JPanel  {
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{43, 0, 0, 0, 79, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		JLabel labelDailyPlays = new JLabel("DAILY-PLAYS");
@@ -122,6 +127,23 @@ public class PantallaInicio extends JPanel  {
 		gbc_botonUsuario.gridx = 8;
 		gbc_botonUsuario.gridy = 1;
 		add(botonUsuario, gbc_botonUsuario);
+		
+		
+		
+
+		ImageIcon imagenGoW = new ImageIcon(getClass().getResource("/imagen/GoW.jpg"));
+		Image imagenOriginal = imagenGoW.getImage();
+		int nuevoAncho = 200;
+		int nuevoAlto = 150;
+		Image imagenRedimensionada = imagenOriginal.getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
+		ImageIcon imagenRedimensionadaIcon = new ImageIcon(imagenRedimensionada);
+		JLabel labelImagenGoW = new JLabel();
+		labelImagenGoW.setIcon(imagenRedimensionadaIcon);
+		GridBagConstraints gbc_labelImagenGoW = new GridBagConstraints();
+		gbc_labelImagenGoW.insets = new Insets(0, 0, 5, 5);
+		gbc_labelImagenGoW.gridx = 5;
+		gbc_labelImagenGoW.gridy = 4;
+		add(labelImagenGoW, gbc_labelImagenGoW);
 		
 		
 

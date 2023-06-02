@@ -29,6 +29,7 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	private ArrayList<Review> reviews;
 	private GeneroVideojuego genero;
 	private PlataformaVideojuego plataforma;
+	private String imagen;
 	
 //	public static ArrayList<Videojuego> busqueda(String nombre){
 		//Usa constructor con el like para que te devuelva aqui todos los juegos que contengan
@@ -61,6 +62,44 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	    }
 
 	    return nota;
+	}
+	
+	
+	
+	
+	public List<Videojuego> obtenerDetallesVideojuego() throws SQLException {
+	    HashMap<String, Object> restricciones = new HashMap<>();
+	    restricciones.put("videojuego_nombre", this.getNombre());
+	    
+	    String tabla = "videojuego";
+	    
+	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
+	    columnasSelect.add("nombre");
+	    columnasSelect.add("nota");
+	    columnasSelect.add("descripcion");
+	    columnasSelect.add("lanzamiento");
+	    columnasSelect.add("genero");
+	    columnasSelect.add("plataforma");
+	    columnasSelect.add("imagen");
+	    
+	    ArrayList<Object> resultados = DAO.consultar(tabla, columnasSelect, restricciones);
+	    
+	    List<Videojuego> listaVideojuegos = new ArrayList<>();
+	    
+	    for (Object resultado : resultados) {
+	        Videojuego videojuego = new Videojuego();
+	        videojuego.setNombre((String) resultado.get("nombre"));
+	        videojuego.setNota((float) resultado.get("nota"));
+	        videojuego.setDescripcion((String) resultado.get("descripcion"));
+	        videojuego.setLanzamiento((Date) resultado.get("lanzamiento"));
+	        videojuego.setGenero((Genero) resultado.get("genero"));
+	        videojuego.setPlataforma((Plataforma) resultado.get("plataforma"));
+	        videojuego.setImagen((String) resultado.get("imagen"));
+	        
+	        listaVideojuegos.add(videojuego);
+	    }
+	    
+	    return listaVideojuegos;
 	}
 	
 

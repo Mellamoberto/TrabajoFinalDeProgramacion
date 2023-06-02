@@ -35,6 +35,15 @@ public class Main {
 		// TODO Auto-generated method stub
 		Ventana v = new Ventana();
 		
+		try {
+			
+			DAO.obtenerDetallesVideojuego();
+			System.out.println(DAO.obtenerDetallesVideojuego());
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		
 			Videojuego videojuego1 = new Videojuego("God of War");
 			Videojuego videojuego2 = new Videojuego("Pokemon");

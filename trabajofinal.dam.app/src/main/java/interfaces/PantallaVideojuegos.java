@@ -131,7 +131,7 @@ public class PantallaVideojuegos extends JPanel {
 			}
 		});
 		
-		
+/*		
 		String tituloVideojuego = DAO.obtenerTituloVideojuego();
 		JLabel labelTitulo = new JLabel(tituloVideojuego);
 		GridBagConstraints gbc_labelTitulo = new GridBagConstraints();
@@ -140,7 +140,7 @@ public class PantallaVideojuegos extends JPanel {
 		gbc_labelTitulo.gridy = 3;
 		add(labelTitulo, gbc_labelTitulo);
 		
-		
+*/		
 		String nota = DAO.obtenerNota()+"";
 		JLabel labelNota = new JLabel(nota);
 		GridBagConstraints gbc_labelNota = new GridBagConstraints();
