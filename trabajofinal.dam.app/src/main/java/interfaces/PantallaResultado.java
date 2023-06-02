@@ -21,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.awt.GridBagConstraints;
+import javax.swing.ScrollPaneConstants;
 
 public class PantallaResultado extends JPanel {
 	private Ventana ventana;
@@ -28,11 +29,13 @@ public class PantallaResultado extends JPanel {
 	
 	public PantallaResultado(Ventana v) {
 		this.ventana=v;
+		
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0, 0, 112, 100, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{43, 0, 42, 0, 79, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0};
 		setLayout(gridBagLayout);
 		
 		JLabel labelDailyPlays = new JLabel("DAILY-PLAYS");
@@ -126,6 +129,33 @@ public class PantallaResultado extends JPanel {
 		gbc_labelResultados.gridx = 2;
 		gbc_labelResultados.gridy = 3;
 		add(labelResultados, gbc_labelResultados);
+		
+		JPanel panel = new JPanel();
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridheight = 3;
+		gbc_panel.gridwidth = 4;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 3;
+		gbc_panel.gridy = 4;
+		add(panel, gbc_panel);
+		panel.setLayout(new BorderLayout(0, 0));
+		
+		JScrollPane scrollPane = new JScrollPane();
+		panel.add(scrollPane, BorderLayout.CENTER);
+		
+		JPanel contenedorElementos = new JPanel();
+		scrollPane.setViewportView(contenedorElementos);
+		GridBagLayout gbl_contenedorElementos = new GridBagLayout();
+		gbl_contenedorElementos.columnWidths = new int[]{0};
+		gbl_contenedorElementos.rowHeights = new int[]{0};
+		gbl_contenedorElementos.columnWeights = new double[]{Double.MIN_VALUE};
+		gbl_contenedorElementos.rowWeights = new double[]{Double.MIN_VALUE};
+		contenedorElementos.setLayout(new BoxLayout(contenedorElementos, BoxLayout.Y_AXIS));
+		
+		for (byte i=0; i<8; i++) {
+			contenedorElementos.add(new ElementosListaResultados(ventana,ventana.usuarioLogado));
+		}
 		
 		
 		
