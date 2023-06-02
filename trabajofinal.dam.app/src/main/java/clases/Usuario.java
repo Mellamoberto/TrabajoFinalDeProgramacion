@@ -127,17 +127,22 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 		System.out.println("Duracion estimada");
 		int duracion = Integer.parseInt(sc.nextLine());
 		
-		Review review = new Review (videojuego.getNombre(), calificacion, comentario, duracion);
+		String usuarioEmail = this.getEmail();
+		
+		LocalDateTime fechaActual = LocalDateTime.now();
+		
+		Review review = new Review(null, usuarioEmail, videojuego.getNombre(), calificacion, comentario, duracion, fechaActual, null);
 		
 		videojuego.agregarReview(review);
 		
 		HashMap<String, Object> columnas = new HashMap<String, Object>();
-		columnas.put("videojuego_nombre", videojuego.getNombre());
+	    columnas.put("usuario_email", usuarioEmail);
+	    columnas.put("videojuego_nombre", videojuego.getNombre());
 	    columnas.put("calificacion", calificacion);
 	    columnas.put("comentario", comentario);
 	    columnas.put("duracion", duracion);
-	    columnas.put("usuario_email", this.getEmail());
-		
+	    columnas.put("fecha_calificacion", fechaActual);
+
 	    DAO.insertar("review", columnas);
 	}
 	

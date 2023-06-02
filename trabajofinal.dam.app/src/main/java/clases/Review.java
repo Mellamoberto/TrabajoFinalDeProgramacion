@@ -1,11 +1,12 @@
 package clases;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Review extends CosaConNombre {
-	private byte id;
+	private int id;
 	private float calificacion;
-	private LocalDate fechaCalificacion;
+	private LocalDateTime fechaCalificacion;
 	private String comentario;
 	private int duracion;
 	private Usuario usuario;
@@ -29,7 +30,39 @@ public class Review extends CosaConNombre {
 	}
 	
 	
+	
+	
+    public Review(int id, String nombre, float calificacion, LocalDateTime fechaCalificacion, String comentario, int duracion) {
+        super(nombre);
+        this.id = id;
+        this.calificacion = calificacion;
+        this.fechaCalificacion = fechaCalificacion;
+        this.comentario = comentario;
+        this.duracion = duracion;
+    }
+    
+    
 
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getFechaCalificacion() {
+		return fechaCalificacion;
+	}
+
+	public void setFechaCalificacion(LocalDateTime fechaCalificacion) {
+		this.fechaCalificacion = fechaCalificacion;
+	}
+
+	public void setCalificacion(float calificacion) {
+		this.calificacion = calificacion;
+	}
 
 	public float getCalificacion() {
 		return calificacion;

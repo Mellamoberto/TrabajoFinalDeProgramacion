@@ -206,6 +206,57 @@ public class DAO {
 	}
 	
 	
+	
+	public static ArrayList<HashMap<String, Object>> consultarDetalles(String tabla, LinkedHashSet<String> columnasSelect,
+	        HashMap<String, Object> restricciones) throws SQLException {
+	    Statement smt = conectar();
+
+	    String query = "select ";
+	    Iterator<String> ith = columnasSelect.iterator();
+	    while (ith.hasNext()) {
+	        query += ith.next() + ",";
+	    }
+	    query = query.substring(0, query.length() - 1) + " from " + tabla + (restricciones.size() > 0 ? " where " : "");
+	    Iterator<Map.Entry<String, Object>> itm = restricciones.entrySet().iterator();
+	    while (itm.hasNext()) {
+	        Map.Entry<String, Object> actual = itm.next();
+	        if (actual.getValue().getClass() != String.class && actual.getValue().getClass() != Character.class) {
+	            query += actual.getKey() + "=" + actual.getValue() + " and ";
+	        } else {
+	            query += actual.getKey() + "='" + actual.getValue() + "' and ";
+	        }
+	    }
+	    if (restricciones.size() > 0) {
+	        query = query.substring(0, query.length() - 5);
+	    }
+	    System.out.println(query);
+	    ResultSet cursor = smt.executeQuery(query);
+
+	    ArrayList<HashMap<String, Object>> filas = new ArrayList<>();
+	    while (cursor.next()) {
+	        HashMap<String, Object> fila = new HashMap<>();
+	        Iterator<String> hsCols = columnasSelect.iterator();
+	        while (hsCols.hasNext()) {
+	            String nombreCol = hsCols.next();
+	            try {
+	                fila.put(nombreCol, cursor.getInt(nombreCol));
+	            } catch (NumberFormatException | SQLException e) {
+	                fila.put(nombreCol, cursor.getString(nombreCol));
+	            }
+	        }
+	        filas.add(fila);
+	    }
+
+	    desconectar(smt);
+	    return filas;
+	}
+	
+	
+	
+	
+	
+	
+	
 	public static List<Videojuego> obtenerDetallesVideojuego() throws SQLException {
 	    
 		HashMap<String, Object> restricciones = new HashMap<>();

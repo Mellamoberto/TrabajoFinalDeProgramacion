@@ -35,6 +35,40 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 		//Usa constructor con el like para que te devuelva aqui todos los juegos que contengan
 		//El texto pasado por argumentos. Usa la misma t�cnica que getTodos
 //	}
+	
+	
+	public Videojuego(String nombre, float nota, String descripcion, LocalDate lanzamiento, Distribuidora distribuidora, Desarrolladora desarrolladora,
+			GeneroVideojuego genero, PlataformaVideojuego plataforma, String imagen) {
+	    super(nombre);
+	    this.nota = nota;
+	    this.descripcion = descripcion;
+	    this.lanzamiento = lanzamiento;
+	    this.genero = genero;
+	    this.plataforma = plataforma;
+	    this.imagen = imagen;
+	}
+	
+	
+	
+	
+	
+	public Videojuego(String nombre, String descripcion, LocalDate lanzamiento, GeneroVideojuego genero,
+		PlataformaVideojuego plataforma) {
+	super(nombre);
+	this.descripcion = descripcion;
+	this.lanzamiento = lanzamiento;
+	this.genero = genero;
+	this.plataforma = plataforma;
+}
+
+
+
+
+
+
+	
+	
+	
 	public float puntuacionMedia() throws SQLException {
 	    float nota = 0;
 
@@ -70,9 +104,9 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	public List<Videojuego> obtenerDetallesVideojuego() throws SQLException {
 	    HashMap<String, Object> restricciones = new HashMap<>();
 	    restricciones.put("videojuego_nombre", this.getNombre());
-	    
+
 	    String tabla = "videojuego";
-	    
+
 	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
 	    columnasSelect.add("nombre");
 	    columnasSelect.add("nota");
@@ -81,26 +115,32 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 	    columnasSelect.add("genero");
 	    columnasSelect.add("plataforma");
 	    columnasSelect.add("imagen");
-	    
-	    ArrayList<Object> resultados = DAO.consultar(tabla, columnasSelect, restricciones);
-	    
+
+	    ArrayList<HashMap<String, Object>> resultados = DAO.consultarDetalles(tabla, columnasSelect, restricciones);
+
 	    List<Videojuego> listaVideojuegos = new ArrayList<>();
-	    
-	    for (Object resultado : resultados) {
-	        Videojuego videojuego = new Videojuego();
-	        videojuego.setNombre((String) resultado.get("nombre"));
-	        videojuego.setNota((float) resultado.get("nota"));
-	        videojuego.setDescripcion((String) resultado.get("descripcion"));
-	        videojuego.setLanzamiento((Date) resultado.get("lanzamiento"));
-	        videojuego.setGenero((Genero) resultado.get("genero"));
-	        videojuego.setPlataforma((Plataforma) resultado.get("plataforma"));
-	        videojuego.setImagen((String) resultado.get("imagen"));
-	        
+
+	    for (HashMap<String, Object> resultado : resultados) {
+	        String nombre = (String) resultado.get("nombre");
+	        float nota = (Float) resultado.get("nota");
+	        String descripcion = (String) resultado.get("descripcion");
+	        LocalDate lanzamiento = (LocalDate) resultado.get("lanzamiento");
+	        Distribuidora distribuidora = (Distribuidora) resultado.get("distribuidora");
+	        Desarrolladora desarolladora = (Desarrolladora) resultado.get("desarrolladora");
+	        GeneroVideojuego genero = (GeneroVideojuego) resultado.get("genero");
+	        PlataformaVideojuego plataforma = (PlataformaVideojuego) resultado.get("plataforma");
+	        String imagen = (String) resultado.get("imagen");
+
+	        Videojuego videojuego = new Videojuego(nombre, nota, descripcion, lanzamiento, distribuidora, desarolladora, genero, plataforma, imagen);
 	        listaVideojuegos.add(videojuego);
 	    }
-	    
+
 	    return listaVideojuegos;
 	}
+
+	
+
+	
 	
 
 	public Videojuego(String nombre, String descripcion, LocalDate lanzamiento) throws SQLException {
@@ -125,13 +165,7 @@ public class Videojuego extends CosaConNombre implements Comparable<Videojuego> 
 		this.plataforma = plataforma;
 	}
 	
-	public Videojuego (String nombre, String descripcion, LocalDate lanzamiento, GeneroVideojuego genero, PlataformaVideojuego plataforma) {
-		super(nombre);
-		this.descripcion=descripcion;
-		this.lanzamiento=lanzamiento;
-		this.genero=genero;
-		this.plataforma=plataforma;
-	}
+
 	
 
 	
@@ -204,6 +238,13 @@ public Videojuego(String nombre) {
 
 
 	
+
+
+
+
+
+
+
 	/*
 	public Videojuego(String nombre) throws SQLException/*, UsuarioNoExisteException*/ {
 		//super(nombre);
