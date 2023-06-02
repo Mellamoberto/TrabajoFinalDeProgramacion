@@ -116,27 +116,27 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
         }
 	
 	
-	public void hacerReview (Videojuego videojuego) throws SQLException {
-		Scanner sc = new Scanner (System.in);
-		System.out.println("Puntuacion del videojuego");
-		float calificacion = Float.parseFloat(sc.nextLine());
-		
-		System.out.println("Comentario");
-		String comentario = sc.nextLine();
-		
-		System.out.println("Duracion estimada");
-		int duracion = Integer.parseInt(sc.nextLine());
-		
-		String usuarioEmail = this.getEmail();
-		
-		LocalDateTime fechaActual = LocalDateTime.now();
-		
-		Review review = new Review(null, usuarioEmail, videojuego.getNombre(), calificacion, comentario, duracion, fechaActual, null);
-		
-		videojuego.agregarReview(review);
-		
-		HashMap<String, Object> columnas = new HashMap<String, Object>();
-	    columnas.put("usuario_email", usuarioEmail);
+	public void hacerReview(Videojuego videojuego) throws SQLException {
+	    Scanner sc = new Scanner(System.in);
+	    System.out.println("Puntuacion del videojuego");
+	    float calificacion = Float.parseFloat(sc.nextLine());
+
+	    System.out.println("Comentario");
+	    String comentario = sc.nextLine();
+
+	    System.out.println("Duracion estimada");
+	    int duracion = Integer.parseInt(sc.nextLine());
+
+	    String usuarioEmail = this.getEmail();
+
+	    LocalDateTime fechaActual = LocalDateTime.now();
+
+	    Review review = new Review(0, email, calificacion, fechaActual, comentario, duracion);
+	    
+	    videojuego.agregarReview(review);
+
+	    HashMap<String, Object> columnas = new HashMap<String, Object>();
+	    columnas.put("usuario_email", email);
 	    columnas.put("videojuego_nombre", videojuego.getNombre());
 	    columnas.put("calificacion", calificacion);
 	    columnas.put("comentario", comentario);

@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import clases.Desarrolladora;
+import clases.Distribuidora;
 import clases.Videojuego;
 import enums.GeneroVideojuego;
 import enums.PlataformaVideojuego;
@@ -257,15 +259,12 @@ public class DAO {
 	
 	
 	
-	public static List<Videojuego> obtenerDetallesVideojuego() throws SQLException {
-	    
-		HashMap<String, Object> restricciones = new HashMap<>();
-		restricciones.put("videojuego_nombre", Videojuego.class);
-		
-		String tabla = "videojuego";
-		 
-	    
-	    
+	public static List<Videojuego> obtenerDetallesVideojuego(String paginaActual) throws SQLException {
+	    HashMap<String, Object> restricciones = new HashMap<>();
+	    restricciones.put("videojuego_nombre", Videojuego.class);
+
+	    String tabla = "videojuego";
+
 	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
 	    columnasSelect.add("nombre");
 	    columnasSelect.add("nota");
@@ -274,39 +273,48 @@ public class DAO {
 	    columnasSelect.add("genero");
 	    columnasSelect.add("plataforma");
 	    columnasSelect.add("imagen");
-	    ArrayList<Object> resultado = DAO.consultar(tabla, columnasSelect, restricciones);
-	    
-	    
-	    
 
-	/*    if (!resultado.isEmpty()) {
-	    	for(Object obj : resultado) {
-	    		if (obj instanceof String) {
-	    			titulo = (String) obj;
-	    		}
-	    	}
+	    ArrayList<HashMap<String, Object>> resultado = DAO.consultarDetalles(tabla, columnasSelect, restricciones);
+
+	    List<Videojuego> videojuegos = new ArrayList<>();
+	    for (HashMap<String, Object> fila : resultado) {
+	        String nombre = (String) fila.get("nombre");
+	        Float nota = (Float) fila.get("nota");
+	        String descripcion = (String) fila.get("descripcion");
+	        LocalDate lanzamiento = (LocalDate) fila.get("lanzamiento");
+	        GeneroVideojuego genero = (GeneroVideojuego) fila.get("genero");
+	        PlataformaVideojuego plataforma = (PlataformaVideojuego) fila.get("plataforma");
+	        String imagen = (String) fila.get("imagen");
+
+	        if (paginaActual.equals("PantallaResultado")) {
+	            Videojuego videojuego = new Videojuego(nombre, nota, descripcion, lanzamiento, null, null, genero, plataforma, imagen);
+	            videojuegos.add(videojuego);
+	        } else {
+	            // Otros casos y configuraciones de detalles según la página
+	        }
 	    }
-*/
-	    return obtenerDetallesVideojuego();
+
+	    return videojuegos;
 	}
+	
+	
+	
 	
 	
 	public static Float obtenerNota() throws SQLException {
 	    String tabla = "videojuego";
-	    Float nota = (Float) null;
-	    
+	    Float nota = null;
+
 	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
 	    columnasSelect.add("nota");
-	    ArrayList<Object> resultado = DAO.consultar(tabla, columnasSelect, new HashMap<>());
+
+	    ArrayList<HashMap<String, Object>> resultado = DAO.consultarDetalles(tabla, columnasSelect, new HashMap<>());
 
 	    if (!resultado.isEmpty()) {
-	    	for(Object obj : resultado) {
-	    		if (obj instanceof Float) {
-	    			nota = (Float) obj;
-	    			
-	    		}
-	    	}
+	        HashMap<String, Object> fila = resultado.get(0);
+	        nota = (Float) fila.get("nota");
 	    }
+
 	    return nota;
 	}
 	
@@ -316,19 +324,15 @@ public class DAO {
 	public static String obtenerDescripcion() throws SQLException {
 	    String tabla = "videojuego";
 	    String descripcion = null;
-	    
+
 	    LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
 	    columnasSelect.add("descripcion");
-	    ArrayList<Object> resultado = DAO.consultar(tabla, columnasSelect, new HashMap<>());
-	    
 
+	    ArrayList<HashMap<String, Object>> resultado = DAO.consultarDetalles(tabla, columnasSelect, new HashMap<>());
 
 	    if (!resultado.isEmpty()) {
-	    	for(Object obj : resultado) {
-	    		if (obj instanceof String) {
-	    			descripcion = (String) obj;
-	    		}
-	    	}
+	        HashMap<String, Object> fila = resultado.get(0);
+	        descripcion = (String) fila.get("descripcion");
 	    }
 
 	    return descripcion;

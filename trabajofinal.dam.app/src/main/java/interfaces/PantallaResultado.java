@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import clases.Usuario;
 import clases.Videojuego;
 import excepciones.VideojuegoNoExisteException;
 
@@ -20,15 +21,20 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.List;
 import java.awt.GridBagConstraints;
 import javax.swing.ScrollPaneConstants;
 
 public class PantallaResultado extends JPanel {
-	private Ventana ventana;
-	private JTextField campoBuscador;
-	
-	public PantallaResultado(Ventana v) {
-		this.ventana=v;
+    private Ventana ventana;
+    private JTextField campoBuscador;
+    private List<Videojuego> listaVideojuegos;
+    private Usuario usuarioActual;
+
+    public PantallaResultado(Ventana v, List<Videojuego> videojuegos, String paginaActual) {
+        this.ventana = v;
+        this.listaVideojuegos = videojuegos;
+        this.usuarioActual = obtenerUsuarioActual();
 		
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -153,13 +159,12 @@ public class PantallaResultado extends JPanel {
 		gbl_contenedorElementos.rowWeights = new double[]{Double.MIN_VALUE};
 		contenedorElementos.setLayout(new BoxLayout(contenedorElementos, BoxLayout.Y_AXIS));
 		
-		for (byte i=0; i<8; i++) {
-			contenedorElementos.add(new ElementosListaResultados(ventana,ventana.usuarioLogado));
-		}
-		
-		
-		
-	}
+        for (Videojuego videojuego : listaVideojuegos) {
+            ElementosListaResultados elementos = new ElementosListaResultados(ventana, usuarioActual, videojuego);
+            elementos.setVideojuego(videojuego, paginaActual); 
+            contenedorElementos.add(elementos);
+        }
+    }
 	
 
 

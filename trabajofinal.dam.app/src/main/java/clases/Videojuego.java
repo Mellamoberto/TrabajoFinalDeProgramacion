@@ -326,8 +326,6 @@ public Videojuego(String nombre) {
 		this.reviews = reviews;
 	}
 
-
-
 	public GeneroVideojuego getGenero() {
 		return genero;
 	}
@@ -343,6 +341,26 @@ public Videojuego(String nombre) {
 	public void setPlataforma(PlataformaVideojuego plataforma) {
 		this.plataforma = plataforma;
 	}
+	
+	public float getNota() {
+		return nota;
+	}
+
+	public void setNota(float nota) {
+		this.nota = nota;
+	}
+	
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
+
+
+
 
 	@Override
 	public String toString() {
