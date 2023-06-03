@@ -25,47 +25,45 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class PantallaLogin extends JPanel{
+public class PantallaLogin extends JPanel {
 	private JTextField campoUsuario;
 	private JPasswordField campoPassword;
 	private Ventana ventana;
-	
+
 	public PantallaLogin(Ventana v) {
 		setBackground(new Color(224, 255, 255));
-		this.ventana=v;
+		this.ventana = v;
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{-20, 0, -90, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { -20, 0, -90, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
-		
+
 		JButton botonLogin = new JButton("INICIAR SESION");
 		botonLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-				String email = campoUsuario.getText();
-				String pass = new String (campoPassword.getPassword());
-				System.out.println(email+" : "+pass);
-					ventana.usuarioLogado=new Usuario(email,pass);
-					JOptionPane.showMessageDialog(ventana, "Bienvenid@, "
-					+ventana.usuarioLogado.getNombre(), "Inicio de sesion realizado",
-					JOptionPane.INFORMATION_MESSAGE);
+					String email = campoUsuario.getText();
+					String pass = new String(campoPassword.getPassword());
+					System.out.println(email + " : " + pass);
+					ventana.usuarioLogado = new Usuario(email, pass);
+					JOptionPane.showMessageDialog(ventana, "Bienvenid@, " + ventana.usuarioLogado.getNombre(),
+							"Inicio de sesion realizado", JOptionPane.INFORMATION_MESSAGE);
 					ventana.cambiarAPantalla(PantallaInicio.class);
 				} catch (SQLIntegrityConstraintViolationException e2) {
 					JOptionPane.showMessageDialog(ventana, "El email ya existe", "No se pudo registrar",
-					JOptionPane.ERROR_MESSAGE);
-				}catch (SQLException e3) {
-					JOptionPane.showMessageDialog(ventana, e3.getMessage(),
-					"Login fallido", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.ERROR_MESSAGE);
+				} catch (SQLException e3) {
+					JOptionPane.showMessageDialog(ventana, e3.getMessage(), "Login fallido", JOptionPane.ERROR_MESSAGE);
 				} catch (UsuarioNoExisteException e4) {
-					JOptionPane.showMessageDialog(ventana, "El email con el que estas intentando "
-					+ "acceder no existe. Intentalo con otro emai", "Email no valido",
-					JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ventana,
+							"El email con el que estas intentando " + "acceder no existe. Intentalo con otro emai",
+							"Email no valido", JOptionPane.ERROR_MESSAGE);
 				} catch (PassInvalidaException e5) {
 					JOptionPane.showMessageDialog(ventana, "Password incorrecta", "Password no valida",
-					JOptionPane.ERROR_MESSAGE);
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -74,7 +72,7 @@ public class PantallaLogin extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		
+
 		JLabel labelTitulo = new JLabel("DAILY-PLAYS");
 		labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		labelTitulo.setFont(new Font("Georgia", Font.PLAIN, 33));
@@ -85,7 +83,7 @@ public class PantallaLogin extends JPanel{
 		gbc_labelTitulo.gridx = 1;
 		gbc_labelTitulo.gridy = 1;
 		add(labelTitulo, gbc_labelTitulo);
-		
+
 		JLabel labelEmail = new JLabel("Correo Usuario");
 		labelEmail.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_labelEmail = new GridBagConstraints();
@@ -94,7 +92,7 @@ public class PantallaLogin extends JPanel{
 		gbc_labelEmail.gridx = 1;
 		gbc_labelEmail.gridy = 2;
 		add(labelEmail, gbc_labelEmail);
-		
+
 		campoUsuario = new JTextField();
 		campoUsuario.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_campoUsuario = new GridBagConstraints();
@@ -105,7 +103,7 @@ public class PantallaLogin extends JPanel{
 		gbc_campoUsuario.gridy = 3;
 		add(campoUsuario, gbc_campoUsuario);
 		campoUsuario.setColumns(10);
-		
+
 		JLabel labelPassword = new JLabel("Contrase\u00F1a");
 		labelPassword.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GridBagConstraints gbc_labelPassword = new GridBagConstraints();
@@ -114,7 +112,7 @@ public class PantallaLogin extends JPanel{
 		gbc_labelPassword.gridx = 1;
 		gbc_labelPassword.gridy = 4;
 		add(labelPassword, gbc_labelPassword);
-		
+
 		campoPassword = new JPasswordField();
 		GridBagConstraints gbc_campoPassword = new GridBagConstraints();
 		gbc_campoPassword.fill = GridBagConstraints.BOTH;
@@ -123,7 +121,7 @@ public class PantallaLogin extends JPanel{
 		gbc_campoPassword.gridx = 1;
 		gbc_campoPassword.gridy = 5;
 		add(campoPassword, gbc_campoPassword);
-		
+
 		JButton botonRegistrar = new JButton("REGISTRARSE");
 		botonRegistrar.addMouseListener(new MouseAdapter() {
 			@Override

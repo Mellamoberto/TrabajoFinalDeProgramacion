@@ -3,6 +3,7 @@ package interfaces;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,26 +24,28 @@ import java.sql.SQLException;
 import clases.Videojuego;
 import excepciones.UsuarioNoExisteException;
 import excepciones.VideojuegoNoExisteException;
+import utils.DAO;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 
-public class PantallaInicio extends JPanel  {
+public class PantallaInicio extends JPanel {
 	private Ventana ventana;
-	private JTextField campoBuscador;
+	JTextField campoBuscador;
 	private JLabel labelImagenGoW;
-	
+
 	public PantallaInicio(Ventana v) {
-		this.ventana=v;
-		
+		this.ventana = v;
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{43, 0, 0, 0, 79, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 43, 0, 0, 0, 79, 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0,
+				Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
-		
+
 		JLabel labelDailyPlays = new JLabel("DAILY-PLAYS");
 		GridBagConstraints gbc_labelDailyPlays = new GridBagConstraints();
 		gbc_labelDailyPlays.anchor = GridBagConstraints.EAST;
@@ -50,7 +53,7 @@ public class PantallaInicio extends JPanel  {
 		gbc_labelDailyPlays.gridx = 2;
 		gbc_labelDailyPlays.gridy = 1;
 		add(labelDailyPlays, gbc_labelDailyPlays);
-		
+
 		JButton botonInicio = new JButton("Inicio");
 		botonInicio.addMouseListener(new MouseAdapter() {
 			@Override
@@ -63,7 +66,7 @@ public class PantallaInicio extends JPanel  {
 		gbc_botonInicio.gridx = 3;
 		gbc_botonInicio.gridy = 1;
 		add(botonInicio, gbc_botonInicio);
-		
+
 		campoBuscador = new JTextField();
 		campoBuscador.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_campoBuscador = new GridBagConstraints();
@@ -73,35 +76,41 @@ public class PantallaInicio extends JPanel  {
 		gbc_campoBuscador.gridy = 1;
 		add(campoBuscador, gbc_campoBuscador);
 		campoBuscador.setColumns(10);
-		
+
 		JButton botonBuscar = new JButton("Buscar");
 		botonBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-				String nombreVideojuego = campoBuscador.getText().trim();
-					Videojuego videojuegoBuscado = new Videojuego (nombreVideojuego);
-						ventana.usuarioLogado.buscarVideojuego(videojuegoBuscado);
+					String nombreVideojuego = campoBuscador.getText().trim();
+					Videojuego videojuegoBuscado = new Videojuego(nombreVideojuego);
+					ventana.usuarioLogado.buscarVideojuego(videojuegoBuscado);
+
 					if (nombreVideojuego.equalsIgnoreCase(videojuegoBuscado.getNombre().trim())) {
+						String paginaActual = "PantallaResultado";
+						List<Videojuego> videojuegos = DAO.obtenerDetallesVideojuego(paginaActual, nombreVideojuego);
+
+						PantallaResultado pantallaResultado = new PantallaResultado(ventana, videojuegos, paginaActual);
+
 						ventana.cambiarAPantalla(PantallaResultado.class);
+					} else {
+						JOptionPane.showMessageDialog(ventana, "El videojuego que buscas aún no está en la página",
+								"Videojuego no válido", JOptionPane.ERROR_MESSAGE);
 					}
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (VideojuegoNoExisteException e2) {
-					JOptionPane.showMessageDialog(ventana, "El videojuego que buscas aun no esta en la pagina ", 
-							"Videojuego no valido", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(ventana, "El videojuego que buscas aún no está en la página",
+							"Videojuego no válido", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
-		
-		
 		GridBagConstraints gbc_botonBuscar = new GridBagConstraints();
 		gbc_botonBuscar.insets = new Insets(0, 0, 5, 5);
 		gbc_botonBuscar.gridx = 6;
 		gbc_botonBuscar.gridy = 1;
 		add(botonBuscar, gbc_botonBuscar);
-		
+
 		JButton botonVideojuegos = new JButton("Videojuegos");
 		botonVideojuegos.addMouseListener(new MouseAdapter() {
 			@Override
@@ -114,7 +123,7 @@ public class PantallaInicio extends JPanel  {
 		gbc_botonVideojuegos.gridx = 7;
 		gbc_botonVideojuegos.gridy = 1;
 		add(botonVideojuegos, gbc_botonVideojuegos);
-		
+
 		JButton botonUsuario = new JButton("Mi Usuario");
 		botonUsuario.addMouseListener(new MouseAdapter() {
 			@Override
@@ -127,25 +136,5 @@ public class PantallaInicio extends JPanel  {
 		gbc_botonUsuario.gridx = 8;
 		gbc_botonUsuario.gridy = 1;
 		add(botonUsuario, gbc_botonUsuario);
-		
-		
-		
-
-		ImageIcon imagenGoW = new ImageIcon(getClass().getResource("/imagen/GoW.jpg"));
-		Image imagenOriginal = imagenGoW.getImage();
-		int nuevoAncho = 200;
-		int nuevoAlto = 150;
-		Image imagenRedimensionada = imagenOriginal.getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
-		ImageIcon imagenRedimensionadaIcon = new ImageIcon(imagenRedimensionada);
-		JLabel labelImagenGoW = new JLabel();
-		labelImagenGoW.setIcon(imagenRedimensionadaIcon);
-		GridBagConstraints gbc_labelImagenGoW = new GridBagConstraints();
-		gbc_labelImagenGoW.insets = new Insets(0, 0, 5, 5);
-		gbc_labelImagenGoW.gridx = 5;
-		gbc_labelImagenGoW.gridy = 4;
-		add(labelImagenGoW, gbc_labelImagenGoW);
-		
-		
-
 	}
 }

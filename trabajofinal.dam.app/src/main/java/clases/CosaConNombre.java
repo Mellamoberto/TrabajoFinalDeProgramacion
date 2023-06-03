@@ -7,10 +7,10 @@ public class CosaConNombre {
 		super();
 		this.nombre = nombre;
 	}
-	
-	public CosaConNombre() {}
-	
-	
+
+	public CosaConNombre() {
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -19,14 +19,9 @@ public class CosaConNombre {
 		this.nombre = nombre;
 	}
 
-
-
 	@Override
 	public String toString() {
 		return "CosaConNombre [nombre=" + nombre + "]";
 	}
-	
-	
-	
-	
+
 }

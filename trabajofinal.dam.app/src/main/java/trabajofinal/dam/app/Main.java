@@ -34,43 +34,29 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Ventana v = new Ventana();
-		
+
 		try {
-			
-			DAO.obtenerDetallesVideojuego();
-			System.out.println(DAO.obtenerDetallesVideojuego());
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
-			Videojuego videojuego1 = new Videojuego("God of War");
-			Videojuego videojuego2 = new Videojuego("Pokemon");
-			
-			try {
-				// Calcular la puntuaci�n media del videojuego
-				float puntuacionMedia = videojuego1.puntuacionMedia();
-				float puntuacionMedia2 = videojuego2.puntuacionMedia();
-				
-				// Imprimir la puntuaci�n media
-				System.out.println("Puntuacion media: " + puntuacionMedia);
-				System.out.println("Puntuacion media: " + puntuacionMedia2);
-			} catch (SQLException e) {
-				e.printStackTrace();
+			ArrayList<Videojuego> listaJuegos = Videojuego.getTodos();
+
+			for (Videojuego juego : listaJuegos) {
+				System.out.println("Nombre: " + juego.getNombre());
+				System.out.println("Nota: " + juego.getNota());
+				System.out.println("Genero: " + juego.getGenero());
+				System.out.println("Plataforma: " + juego.getPlataforma());
+				System.out.println("------------------------");
+
+				try {
+					float puntuacionMedia = juego.puntuacionMedia();
+					System.out.println("Puntuación media de " + juego.getNombre() + ": " + puntuacionMedia);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 
-		    int resultado = videojuego1.compareTo(videojuego2);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-
-		    if (resultado < 0) {
-		        System.out.println(videojuego1.getNombre() + " es mejor que " + videojuego2.getNombre());
-		    } else if (resultado > 0) {
-		        System.out.println(videojuego2.getNombre() + " es mejor que " + videojuego1.getNombre());
-		    } else {
-		        System.out.println("Ambos videojuegos tienen la misma puntuacion media");
-		    }
-			
 	}
-	
+
 }
