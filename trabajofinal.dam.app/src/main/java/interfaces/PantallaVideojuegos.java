@@ -152,6 +152,24 @@ public class PantallaVideojuegos extends JPanel {
 		gbc_labelDescripcion.gridx = 5;
 		gbc_labelDescripcion.gridy = 4;
 		add(labelDescripcion, gbc_labelDescripcion);
+		
+		JButton botonInsertActual = new JButton("Insertar a Actual");
+		botonInsertActual.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					ventana.usuarioLogado.meterVideojuegoActual(null);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		GridBagConstraints gbc_botonInsertActual = new GridBagConstraints();
+		gbc_botonInsertActual.insets = new Insets(0, 0, 5, 5);
+		gbc_botonInsertActual.gridx = 6;
+		gbc_botonInsertActual.gridy = 7;
+		add(botonInsertActual, gbc_botonInsertActual);
 
 	}
 

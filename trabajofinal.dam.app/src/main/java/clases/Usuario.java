@@ -18,6 +18,8 @@ import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import enums.GeneroVideojuego;
+import enums.PlataformaVideojuego;
 import excepciones.PassInvalidaException;
 import excepciones.UsuarioNoExisteException;
 import excepciones.VideojuegoNoExisteException;
@@ -174,6 +176,60 @@ public class Usuario extends CosaConNombre implements Comparable<Usuario> {
 			}
 		}
 	}
+	
+	
+	
+	public TreeSet<Videojuego> consultarVideojuegoActual () throws SQLException {
+		LinkedHashSet<String> columnasSelect = new LinkedHashSet<>();
+		columnasSelect.add("nombre_videojuego");
+
+		HashMap<String, Object> restricciones = new HashMap<>();
+		restricciones.put("email_usuario", this.getEmail());
+
+		ArrayList<Object> resultado = DAO.consultar("videojuego_actual", columnasSelect, restricciones);
+		
+		TreeSet<Videojuego> listaVideojuegoActual = new TreeSet<Videojuego>();
+		for (int i = 0; i < resultado.size(); i++) {
+			String nombre = (String) resultado.get(i);			
+			
+			Videojuego videojuego = new Videojuego(nombre);
+			listaVideojuegoActual.add(videojuego);
+			
+		}
+		
+		return listaVideojuegoActual;
+	}
+	
+	
+	public void meterVideojuegoActual (Videojuego videojuego) throws SQLException {
+		HashMap<String, Object> columnas = new HashMap<String,Object>();
+		columnas.put("email_usuario", this.email);
+		columnas.put("nombre_videojuego", videojuego.getNombre());
+		DAO.insertar("videojuego_actual", columnas);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public String getEmail() {
 		return email;
